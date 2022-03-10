@@ -1,0 +1,12 @@
+ext {
+    appConfig = [
+            applicationId: "it.luik.rijksmuseum",
+
+            versionCode  : 1,
+            versionName  : "0.0.1",
+
+            compileSdk   : 31,
+            targetSdk    : 31,
+            minSdk       : 21
+    ]
+}

@@ -1,0 +1,33 @@
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+
+            android {
+                compileSdk appConfig.compileSdk
+
+                defaultConfig {
+                    minSdk appConfig.minSdk
+                    targetSdk appConfig.targetSdk
+                    versionCode appConfig.versionCode
+                    versionName appConfig.versionName
+
+                    consumerProguardFile 'proguard-rules.pro'
+                }
+
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_1_8
+                    targetCompatibility = JavaVersion.VERSION_1_8
+                }
+
+                kotlinOptions {
+                    jvmTarget = '1.8'
+                }
+
+                tasks.withType(Test) {
+                    // Run JUnit 5 tests.
+                    useJUnitPlatform()
+                }
+            }
+        }
+    }
+}
