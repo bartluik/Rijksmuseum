@@ -2,6 +2,7 @@ buildscript {
     apply from: './dependencies.gradle'
 
     dependencies {
+        classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$versions.hilt"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.androidx.navigation"
     }

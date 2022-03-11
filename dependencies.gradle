@@ -15,14 +15,16 @@ ext {
                     espresso  : "3.4.0"
             ],
             junit        : "5.8.2",
+            junitPioneer : "1.6.2",
             junitExt     : "2.5.0",
+            mockk        : "1.12.2",
             retrofit     : "2.9.0",
             moshi        : "1.13.0",
             okhttp       : "4.9.3",
             okhttpLogging: "4.9.0",
             timber       : "5.0.1",
             coroutines   : "1.6.0",
-            chucker      : "3.5.2"
+            chucker      : "3.5.2",
 
     ]
 
@@ -60,9 +62,12 @@ ext {
     ]
 
     testLibs = [
+            mockk   : "io.mockk:mockk:$versions.mockk",
             junit   : [
-                    "org.junit.jupiter:junit-jupiter:$versions.junit",
-                    "io.github.glytching:junit-extensions:$versions.junitExt"
+                    core   : "org.junit.jupiter:junit-jupiter:$versions.junit",
+                    params : "org.junit.jupiter:junit-jupiter-params:$versions.junit",
+                    pioneer: "org.junit-pioneer:junit-pioneer:$versions.junitPioneer",
+                    ext    : "io.github.glytching:junit-extensions:$versions.junitExt"
             ],
             androidx: [
                     navigation: "androidx.navigation:navigation-testing:$versions.androidx.navigation",

@@ -13,5 +13,5 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    testImplementation(testLibs.junit)
+    testImplementation(testLibs.junit.core)
 }
