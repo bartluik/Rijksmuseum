@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import it.luik.rijksmuseum.common.view.inStartedLifecycle
 import it.luik.rijksmuseum.common.view.viewBindingLifecycle
 import it.luik.rijksmuseum.databinding.FragmentArtOverviewBinding
 
+@AndroidEntryPoint
 internal class ArtOverviewFragment : Fragment() {
 
     private val viewModel: ArtOverviewViewModel by viewModels()

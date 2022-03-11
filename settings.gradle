@@ -13,4 +13,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Rijksmuseum"
-include ':app'
+include ':app',
+        ':art',
+        ':network'

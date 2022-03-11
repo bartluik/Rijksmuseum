@@ -1,0 +1,27 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    defaultConfig {
+        buildConfigField 'String', 'RIJKS_DATA_BASE_URL', "\"https://www.rijksmuseum.nl\""
+    }
+}
+
+dependencies {
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chuckerNoOp)
+    implementation(libs.coroutines)
+    implementation(libs.timber)
+    implementation(libs.retrofit)
+    implementation(libs.okhttp)
+    implementation(libs.okhttpLogging)
+    implementation(libs.moshi)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
+    testImplementation(testLibs.junit)
+}
