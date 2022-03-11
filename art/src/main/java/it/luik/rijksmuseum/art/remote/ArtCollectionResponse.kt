@@ -12,6 +12,7 @@ internal class ArtCollectionResponse(
 internal class ArtObjectResponse(
     val id: String,
     val longTitle: String,
+    val principalOrFirstMaker: String,
     val webImage: WebImageResponse
 )
 

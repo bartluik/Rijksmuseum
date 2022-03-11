@@ -16,7 +16,8 @@ internal class RijksmuseumArtCollectionRepository @Inject constructor(
                     Art(
                         id = artObject.id,
                         title = artObject.longTitle,
-                        imageUrl = artObject.webImage.url
+                        imageUrl = artObject.webImage.url,
+                        author = artObject.principalOrFirstMaker
                     )
                 }
             }
