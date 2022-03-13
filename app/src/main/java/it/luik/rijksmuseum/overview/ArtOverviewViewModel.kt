@@ -7,6 +7,7 @@ import it.luik.rijksmuseum.art.Art
 import it.luik.rijksmuseum.art.ArtCollectionRepository
 import it.luik.rijksmuseum.overview.OverviewItem.ArtOverviewItem
 import it.luik.rijksmuseum.overview.OverviewItem.HeaderOverviewItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -20,16 +21,34 @@ internal class ArtOverviewViewModel @Inject constructor(
 
     val overviewItems = MutableStateFlow<List<OverviewItem>>(emptyList())
     val onNavigateToItem: MutableSharedFlow<String> = MutableSharedFlow()
+    val totalItemCount = MutableStateFlow(0)
+
+    val showLoading = MutableStateFlow(false)
+    val showLoadMore = MutableStateFlow(false)
+
+    private var page: Int = 0
+    private var isLoading = false
 
     init {
+        loadArtCollection()
+    }
+
+    private fun loadArtCollection() {
         viewModelScope.launch {
-            repo.getCollection()
+            startLoading()
+            repo.getCollection(page)
                 .map(::toArtItemsByAuthor)
                 .fold(
                     onSuccess = ::onCollection,
                     onFailure = ::onCollectionFailed
                 )
         }
+    }
+
+    private fun startLoading() {
+        isLoading = true
+        if (page == 0) showLoading.value = isLoading
+        else showLoadMore.value = isLoading
     }
 
     private fun toArtItemsByAuthor(collection: List<Art>): List<OverviewItem> {
@@ -47,11 +66,14 @@ internal class ArtOverviewViewModel @Inject constructor(
     }
 
     private fun onCollection(collection: List<OverviewItem>) {
-        overviewItems.value = collection
+        overviewItems.value = overviewItems.value + collection
+        stopLoading()
     }
 
     private fun onCollectionFailed(throwable: Throwable) {
+        stopLoading()
         Timber.e(throwable, "Failed to load art collection")
+        // TODO: handle failure
     }
 
     fun onOverviewItemClick(item: OverviewItem) {
@@ -61,6 +83,21 @@ internal class ArtOverviewViewModel @Inject constructor(
             is ArtOverviewItem -> viewModelScope.launch {
                 onNavigateToItem.emit(item.id)
             }
+        }
+    }
+
+    fun onLoadMore() {
+        if (!isLoading) {
+            page++
+            loadArtCollection()
+        }
+    }
+
+    private fun stopLoading() {
+        viewModelScope.launch(Dispatchers.IO) {
+            isLoading = false
+            showLoading.value = isLoading
+            showLoadMore.value = isLoading
         }
     }
 }

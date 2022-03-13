@@ -24,8 +24,7 @@ ext {
             okhttpLogging: "4.9.0",
             timber       : "5.0.1",
             coroutines   : "1.6.0",
-            chucker      : "3.5.2",
-
+            chucker      : "3.5.2"
     ]
 
     libs = [

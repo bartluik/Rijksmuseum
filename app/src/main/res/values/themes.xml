@@ -6,8 +6,8 @@
         <item name="colorPrimaryVariant">@color/grey</item>
         <item name="colorOnPrimary">@color/pencil_dark_night</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/dark_grey</item>
-        <item name="colorSecondaryVariant">@color/dim_dark_grey</item>
+        <item name="colorSecondary">@color/dim_dark_grey</item>
+        <item name="colorSecondaryVariant">@color/dark_grey</item>
         <item name="colorOnSecondary">@color/white</item>
 
         <!-- Status bar color. -->
@@ -16,6 +16,5 @@
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-
     </style>
 </resources>

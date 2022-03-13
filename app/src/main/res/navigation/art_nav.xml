@@ -9,6 +9,15 @@
         android:id="@+id/artOverview"
         android:name="it.luik.rijksmuseum.overview.ArtOverviewFragment"
         android:label="@string/art_overview_label"
-        tools:layout="@layout/fragment_art_overview" />
+        tools:layout="@layout/fragment_art_overview">
+        <action
+            android:id="@+id/to_art_detail"
+            app:destination="@id/nav_art_detail_dialog" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/nav_art_detail_dialog"
+        android:name="it.luik.rijksmuseum.detail.ArtDetailFragment"
+        tools:layout="@layout/item_art_overview" />
 
 </navigation>

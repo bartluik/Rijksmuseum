@@ -13,4 +13,6 @@
     <color name="dark_grey">#494A4D</color>
     <color name="dim_dark_grey">#8D8E90</color>
 
+    <color name="loading_green">#5DA133</color>
+
 </resources>

@@ -11,6 +11,7 @@ internal class ArtCollectionResponse(
 @Keep
 internal class ArtObjectResponse(
     val id: String,
+    val title: String,
     val longTitle: String,
     val principalOrFirstMaker: String,
     val webImage: WebImageResponse

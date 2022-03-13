@@ -7,7 +7,7 @@ internal class RijkDataClient @Inject constructor(
     private val service: RijksDataService,
 ) {
 
-    suspend fun getCollection(): Result<ArtCollectionResponse> = mapResult {
-        service.getCollection()
+    suspend fun getCollection(page: Int): Result<ArtCollectionResponse> = mapResult {
+        service.getCollection(page)
     }
 }

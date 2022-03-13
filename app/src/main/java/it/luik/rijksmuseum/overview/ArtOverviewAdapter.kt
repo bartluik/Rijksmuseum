@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.dispose
 import coil.load
+import coil.size.Scale
 import it.luik.rijksmuseum.R
 import it.luik.rijksmuseum.common.view.shimmerHighlightDrawable
 import it.luik.rijksmuseum.databinding.ItemArtOverviewBinding
@@ -76,6 +77,7 @@ internal class ArtOverviewAdapter(
                 artTitle.text = item.title
                 artIllustration.load(item.imageUrl) {
                     placeholder(shimmerHighlightDrawable(root.context))
+                    scale(Scale.FIT)
                     error(R.drawable.image_art_error)
                 }
                 root.setOnClickListener {

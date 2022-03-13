@@ -9,13 +9,14 @@ internal class RijksmuseumArtCollectionRepository @Inject constructor(
     private val client: RijkDataClient
 ) : ArtCollectionRepository {
 
-    override suspend fun getCollection(): Result<List<Art>> {
+    override suspend fun getCollection(page: Int): Result<List<Art>> {
         return withContext(Dispatchers.IO) {
-            client.getCollection().map {
+            client.getCollection(page).map {
                 it.artObjects.map { artObject ->
                     Art(
                         id = artObject.id,
-                        title = artObject.longTitle,
+                        title = artObject.title,
+                        longTitle = artObject.longTitle,
                         imageUrl = artObject.webImage.url,
                         author = artObject.principalOrFirstMaker
                     )
