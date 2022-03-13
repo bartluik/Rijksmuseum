@@ -3,11 +3,10 @@ package it.luik.rijksmuseum.overview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import it.luik.rijksmuseum.art.Art
 import it.luik.rijksmuseum.art.ArtCollectionRepository
+import it.luik.rijksmuseum.art.ArtSummary
 import it.luik.rijksmuseum.overview.OverviewItem.ArtOverviewItem
 import it.luik.rijksmuseum.overview.OverviewItem.HeaderOverviewItem
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -51,7 +50,7 @@ internal class ArtOverviewViewModel @Inject constructor(
         else showLoadMore.value = isLoading
     }
 
-    private fun toArtItemsByAuthor(collection: List<Art>): List<OverviewItem> {
+    private fun toArtItemsByAuthor(collection: List<ArtSummary>): List<OverviewItem> {
         return collection.groupBy { it.author }
             .flatMap { (author, artItems) ->
                 listOf(HeaderOverviewItem(author)) +
@@ -94,10 +93,8 @@ internal class ArtOverviewViewModel @Inject constructor(
     }
 
     private fun stopLoading() {
-        viewModelScope.launch(Dispatchers.IO) {
-            isLoading = false
-            showLoading.value = isLoading
-            showLoadMore.value = isLoading
-        }
+        isLoading = false
+        showLoading.value = isLoading
+        showLoadMore.value = isLoading
     }
 }

@@ -1,9 +1,9 @@
 package it.luik.rijksmuseum.art
 
-data class Art(
+data class ArtSummary(
     val id: String,
     val title: String,
     val longTitle: String,
-    val imageUrl: String,
+    val imageUrl: String?,
     val author: String,
 )

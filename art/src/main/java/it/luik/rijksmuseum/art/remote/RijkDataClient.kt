@@ -10,4 +10,10 @@ internal class RijkDataClient @Inject constructor(
     suspend fun getCollection(page: Int): Result<ArtCollectionResponse> = mapResult {
         service.getCollection(page)
     }
+
+    suspend fun getArtDetails(artId: String): Result<ArtDetailsObjectResponse> = mapResult {
+        service.getArtDetails(artId)
+    }.map {
+        it.artObject
+    }
 }

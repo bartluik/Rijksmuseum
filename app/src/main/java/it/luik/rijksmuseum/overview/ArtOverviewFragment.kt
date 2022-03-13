@@ -68,6 +68,6 @@ internal class ArtOverviewFragment : Fragment() {
     }
 
     private fun onNavigateToDetails(id: String) {
-        navigate(ArtOverviewFragmentDirections.toArtDetail())
+        navigate(ArtOverviewFragmentDirections.toArtDetails(id))
     }
 }

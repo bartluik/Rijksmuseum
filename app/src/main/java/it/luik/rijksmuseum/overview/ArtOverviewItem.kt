@@ -9,6 +9,6 @@ internal sealed class OverviewItem {
     data class ArtOverviewItem(
         val id: String,
         val title: String,
-        val imageUrl: String
+        val imageUrl: String?
     ) : OverviewItem()
 }
