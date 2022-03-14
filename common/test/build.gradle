@@ -1,0 +1,11 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+dependencies {
+    implementation(testLibs.junit.core)
+    implementation(testLibs.mockk)
+    implementation(testLibs.coroutines)
+}

@@ -1,9 +1,10 @@
-package it.luik.rijksmuseum.details
+package it.luik.rijksmuseum.art.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,11 +12,12 @@ import coil.load
 import coil.size.Scale
 import dagger.hilt.android.AndroidEntryPoint
 import it.luik.rijksmuseum.R
-import it.luik.rijksmuseum.art.ArtDetails
+import it.luik.rijksmuseum.common.StringResource
 import it.luik.rijksmuseum.common.view.inStartedLifecycle
 import it.luik.rijksmuseum.common.view.shimmerHighlightDrawable
 import it.luik.rijksmuseum.common.view.viewBindingLifecycle
 import it.luik.rijksmuseum.databinding.FragmentArtDetailsBinding
+import it.luik.rijksmuseum.art.details.ArtDetailsViewModel.LoadingState
 
 @AndroidEntryPoint
 class ArtDetailsFragment : Fragment() {
@@ -39,15 +41,23 @@ class ArtDetailsFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        inStartedLifecycle(
-            { viewModel.showLoading.collect(::onShowLoading) },
-            { viewModel.artDetails.collect(::onDetails) }
-
-        )
+        with(viewModel) {
+            inStartedLifecycle(
+                { loadingState.collect(::onShowLoading) },
+                { artDetails.collect(::onDetails) },
+                { onErrorMessage.collect(::onErrorMessage) },
+            )
+        }
     }
 
-    private fun onShowLoading(loading: Boolean) {
-        binding.artLoadingBar.isVisible = loading
+    private fun onErrorMessage(errorMessage: StringResource) {
+        val context = requireContext()
+        Toast.makeText(context, errorMessage.get(context), Toast.LENGTH_LONG)
+            .show()
+    }
+
+    private fun onShowLoading(loadingState: LoadingState) {
+        binding.artLoadingBar.isVisible = loadingState == LoadingState.LOADING
     }
 
     private fun onDetails(details: ArtDetails?) {
@@ -59,7 +69,7 @@ class ArtDetailsFragment : Fragment() {
             artIllustration.load(details.imageUrl) {
                 placeholder(shimmerHighlightDrawable(root.context))
                 scale(Scale.FIT)
-                error(R.drawable.image_art_error)
+                error(R.drawable.ic_image_not_supported_large)
             }
         }
     }

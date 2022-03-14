@@ -1,4 +1,4 @@
-package it.luik.rijksmuseum.art
+package it.luik.rijksmuseum.art.details
 
 data class ArtDetails(
     val id: String,

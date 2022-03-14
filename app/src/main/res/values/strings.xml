@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Rijksmuseum</string>
     <string name="art_overview_label">Kunst Overzicht</string>
+
+    <string name="error_auth">Er is helaas iets mis gegaan met de authenticatie</string>
+    <string name="error_client">Er is helaas iets mis gegaan met de client, probeer een andere versie of iets</string>
+    <string name="error_server">Er is helaas iets mis gegaan met de server, probeer het later nog een keer</string>
+    <string name="error_generic">Er is helaas iets mis gegaan met de server, probeer het later nog een keer</string>
 </resources>

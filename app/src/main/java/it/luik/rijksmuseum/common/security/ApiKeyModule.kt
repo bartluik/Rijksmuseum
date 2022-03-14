@@ -1,9 +1,10 @@
-package it.luik.rijksmuseum
+package it.luik.rijksmuseum.common.security
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import it.luik.rijksmuseum.BuildConfig
 import it.luik.rijksmuseum.network.RijksDataApiKey
 
 @Module

@@ -21,3 +21,17 @@ apply from: './app-config.gradle'
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+subprojects {
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+        kotlinOptions {
+            jvmTarget = "1.8"
+            freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        }
+    }
+
+    tasks.withType(Test) {
+        useJUnitPlatform()
+    }
+}

@@ -7,9 +7,10 @@ internal class RijkDataClient @Inject constructor(
     private val service: RijksDataService,
 ) {
 
-    suspend fun getCollection(page: Int): Result<ArtCollectionResponse> = mapResult {
-        service.getCollection(page)
-    }
+    suspend fun getCollection(page: Int, resultSize: Int): Result<ArtCollectionResponse> =
+        mapResult {
+            service.getCollection(page, resultSize)
+        }
 
     suspend fun getArtDetails(artId: String): Result<ArtDetailsObjectResponse> = mapResult {
         service.getArtDetails(artId)

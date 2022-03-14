@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/artOverview"
-        android:name="it.luik.rijksmuseum.overview.ArtOverviewFragment"
+        android:name="it.luik.rijksmuseum.art.collection.ArtCollectionFragment"
         tools:layout="@layout/fragment_art_overview">
 
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/nav_art_details"
-        android:name="it.luik.rijksmuseum.details.ArtDetailsFragment"
+        android:name="it.luik.rijksmuseum.art.details.ArtDetailsFragment"
         tools:layout="@layout/item_art_overview">
 
         <argument

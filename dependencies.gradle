@@ -24,7 +24,8 @@ ext {
             okhttpLogging: "4.9.0",
             timber       : "5.0.1",
             coroutines   : "1.6.0",
-            chucker      : "3.5.2"
+            chucker      : "3.5.2",
+            turbine      : "0.7.0"
     ]
 
     libs = [
@@ -61,14 +62,16 @@ ext {
     ]
 
     testLibs = [
-            mockk   : "io.mockk:mockk:$versions.mockk",
-            junit   : [
+            mockk     : "io.mockk:mockk:$versions.mockk",
+            junit     : [
                     core   : "org.junit.jupiter:junit-jupiter:$versions.junit",
                     params : "org.junit.jupiter:junit-jupiter-params:$versions.junit",
                     pioneer: "org.junit-pioneer:junit-pioneer:$versions.junitPioneer",
                     ext    : "io.github.glytching:junit-extensions:$versions.junitExt"
             ],
-            androidx: [
+            coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines",
+            turbine   : "app.cash.turbine:turbine:$versions.turbine",
+            androidx  : [
                     navigation: "androidx.navigation:navigation-testing:$versions.androidx.navigation",
                     ext       : "androidx.test.ext:junit:$versions.androidx.testExt",
                     espresso  : "androidx.test.espresso:espresso-core:$versions.androidx.espresso"

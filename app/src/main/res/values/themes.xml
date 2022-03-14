@@ -3,12 +3,12 @@
     <style name="Theme.Rijksmuseum" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/grey</item>
+        <item name="colorPrimaryVariant">@color/light_grey</item>
         <item name="colorOnPrimary">@color/pencil_dark_night</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/dim_dark_grey</item>
         <item name="colorSecondaryVariant">@color/dark_grey</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSecondary">@color/dim_grey</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

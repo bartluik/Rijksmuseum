@@ -1,4 +1,4 @@
-package it.luik.rijksmuseum
+package it.luik.rijksmuseum.art
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

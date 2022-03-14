@@ -1,4 +1,4 @@
-package it.luik.rijksmuseum.overview
+package it.luik.rijksmuseum.art.collection
 
 import android.view.LayoutInflater.from
 import android.view.ViewGroup
@@ -11,19 +11,19 @@ import it.luik.rijksmuseum.R
 import it.luik.rijksmuseum.common.view.shimmerHighlightDrawable
 import it.luik.rijksmuseum.databinding.ItemArtOverviewBinding
 import it.luik.rijksmuseum.databinding.ItemHeaderOverviewBinding
-import it.luik.rijksmuseum.overview.ArtOverviewAdapter.ViewType.ART
-import it.luik.rijksmuseum.overview.ArtOverviewAdapter.ViewType.HEADER
-import it.luik.rijksmuseum.overview.OverviewItem.ArtOverviewItem
-import it.luik.rijksmuseum.overview.OverviewItem.HeaderOverviewItem
+import it.luik.rijksmuseum.art.collection.ArtCollectionAdapter.ViewType.ART
+import it.luik.rijksmuseum.art.collection.ArtCollectionAdapter.ViewType.HEADER
+import it.luik.rijksmuseum.art.collection.CollectionItem.ArtCollectionItem
+import it.luik.rijksmuseum.art.collection.CollectionItem.HeaderCollectionItem
 
-internal class ArtOverviewAdapter(
-    val onItemClick: (OverviewItem) -> Unit
-) : ListAdapter<OverviewItem, RecyclerView.ViewHolder>(ArtOverviewItemDiff) {
+internal class ArtCollectionAdapter(
+    val onItemClick: (CollectionItem) -> Unit
+) : ListAdapter<CollectionItem, RecyclerView.ViewHolder>(CollectionItemDiff) {
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is ArtOverviewItem -> ART
-            is HeaderOverviewItem -> HEADER
+            is ArtCollectionItem -> ART
+            is HeaderCollectionItem -> HEADER
         }
     }
 
@@ -42,8 +42,8 @@ internal class ArtOverviewAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
-            is ArtOverviewItem -> (holder as ArtOverviewViewHolder).bind(item)
-            is HeaderOverviewItem -> (holder as HeaderOverviewViewHolder).bind(item)
+            is ArtCollectionItem -> (holder as ArtOverviewViewHolder).bind(item)
+            is HeaderCollectionItem -> (holder as HeaderOverviewViewHolder).bind(item)
         }
     }
 
@@ -58,7 +58,7 @@ internal class ArtOverviewAdapter(
         private val binding: ItemHeaderOverviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: HeaderOverviewItem) {
+        fun bind(item: HeaderCollectionItem) {
             with(binding) {
                 overviewHeaderTitle.text = item.title
                 root.setOnClickListener {
@@ -72,13 +72,13 @@ internal class ArtOverviewAdapter(
         private val binding: ItemArtOverviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ArtOverviewItem) {
+        fun bind(item: ArtCollectionItem) {
             with(binding) {
                 artTitle.text = item.title
                 artIllustration.load(item.imageUrl) {
                     placeholder(shimmerHighlightDrawable(root.context))
                     scale(Scale.FIT)
-                    error(R.drawable.image_art_error)
+                    error(R.drawable.ic_image_not_supported)
                 }
                 root.setOnClickListener {
                     onItemClick(item)

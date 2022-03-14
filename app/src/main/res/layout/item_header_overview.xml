@@ -4,6 +4,7 @@
     android:id="@+id/overview_header_title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/colorPrimaryVariant"
     android:padding="@dimen/default_spacing"
     android:textSize="@dimen/text_size_h2"
     tools:text="Rembrandt van Rijn" />

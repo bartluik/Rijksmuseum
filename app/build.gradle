@@ -36,14 +36,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
 
-    tasks.withType(Test) {
-        // Run JUnit 5 tests.
-        useJUnitPlatform()
-    }
 }
 
 dependencies {
@@ -64,6 +57,10 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     testImplementation(testLibs.junit.core)
+    testImplementation(testLibs.junit.ext)
+    testImplementation(testLibs.mockk)
+    testImplementation(testLibs.turbine)
+    testImplementation(project(':common:test'))
 
     androidTestImplementation(testLibs.androidx.ext)
     androidTestImplementation(testLibs.androidx.navigation)

@@ -7,20 +7,21 @@
     android:layout_margin="@dimen/small_spacing"
     android:background="@drawable/bg_overview_item"
     android:minHeight="150dp"
-    android:padding="@dimen/small_spacing">
+    android:padding="@dimen/default_spacing">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/art_illustration"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/white"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.3" />
+        app:layout_constraintWidth_percent="0.4" />
 
     <TextView
         android:id="@+id/art_title"

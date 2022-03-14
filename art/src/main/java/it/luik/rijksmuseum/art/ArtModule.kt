@@ -15,7 +15,7 @@ import retrofit2.create
 internal abstract class ArtModule {
 
     @Binds
-    abstract fun bindCollectionRepo(repo: RijksmuseumArtCollectionRepository): ArtCollectionRepository
+    abstract fun bindCollectionRepo(repo: RijksmuseumArtRepository): ArtRepository
 
     companion object {
 
