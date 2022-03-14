@@ -1,6 +1,7 @@
 package it.luik.rijksmuseum.art.remote
 
 import it.luik.rijksmuseum.network.mapResult
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 internal class RijkDataClient @Inject constructor(
@@ -13,6 +14,7 @@ internal class RijkDataClient @Inject constructor(
         }
 
     suspend fun getArtDetails(artId: String): Result<ArtDetailsObjectResponse> = mapResult {
+        delay(3000L)
         service.getArtDetails(artId)
     }.map {
         it.artObject

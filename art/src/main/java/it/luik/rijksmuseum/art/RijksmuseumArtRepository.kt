@@ -18,7 +18,8 @@ internal class RijksmuseumArtRepository @Inject constructor(
 
 
     override suspend fun getDetails(artId: String) = withContext(Dispatchers.IO) {
-        client.getArtDetails(artId).toArtDetails()
+        client.getArtDetails(artId)
+            .toArtDetails()
     }
 
     companion object {

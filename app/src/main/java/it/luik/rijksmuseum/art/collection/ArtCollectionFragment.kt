@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import it.luik.rijksmuseum.art.artOverviewLoadMoreListener
-import it.luik.rijksmuseum.art.collection.ArtCollectionViewModel.LoadingState
 import it.luik.rijksmuseum.common.StringResource
+import it.luik.rijksmuseum.common.loading.LoadingState
 import it.luik.rijksmuseum.common.navigate
 import it.luik.rijksmuseum.common.view.inStartedLifecycle
 import it.luik.rijksmuseum.common.view.viewBindingLifecycle
@@ -71,8 +71,8 @@ internal class ArtCollectionFragment : Fragment() {
 
     private fun onShowLoading(loadingState: LoadingState) {
         with(binding) {
-            artLoadingBar.isVisible = loadingState == LoadingState.LOADING
-            artLoadMoreBar.isVisible = loadingState == LoadingState.LOADING_MORE
+            collectionLoadingBar.isVisible = loadingState == LoadingState.LOADING
+            collectionLoadMoreBar.isVisible = loadingState == LoadingState.LOADING_MORE
         }
     }
 

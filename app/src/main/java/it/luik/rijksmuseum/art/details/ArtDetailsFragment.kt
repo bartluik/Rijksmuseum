@@ -13,11 +13,11 @@ import coil.size.Scale
 import dagger.hilt.android.AndroidEntryPoint
 import it.luik.rijksmuseum.R
 import it.luik.rijksmuseum.common.StringResource
+import it.luik.rijksmuseum.common.loading.LoadingState
 import it.luik.rijksmuseum.common.view.inStartedLifecycle
 import it.luik.rijksmuseum.common.view.shimmerHighlightDrawable
 import it.luik.rijksmuseum.common.view.viewBindingLifecycle
 import it.luik.rijksmuseum.databinding.FragmentArtDetailsBinding
-import it.luik.rijksmuseum.art.details.ArtDetailsViewModel.LoadingState
 
 @AndroidEntryPoint
 class ArtDetailsFragment : Fragment() {
@@ -57,7 +57,9 @@ class ArtDetailsFragment : Fragment() {
     }
 
     private fun onShowLoading(loadingState: LoadingState) {
-        binding.artLoadingBar.isVisible = loadingState == LoadingState.LOADING
+        binding.root.post {
+            binding.detailsLoadingBar.isVisible = loadingState != LoadingState.NONE
+        }
     }
 
     private fun onDetails(details: ArtDetails?) {

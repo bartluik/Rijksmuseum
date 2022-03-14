@@ -4,32 +4,29 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import it.luik.rijksmuseum.R
 import it.luik.rijksmuseum.art.ArtRepository
-import it.luik.rijksmuseum.art.collection.ArtCollectionViewModel.LoadingState.*
 import it.luik.rijksmuseum.art.collection.CollectionItem.ArtCollectionItem
 import it.luik.rijksmuseum.art.collection.CollectionItem.HeaderCollectionItem
 import it.luik.rijksmuseum.common.StringResource
-import it.luik.rijksmuseum.network.NetworkException.*
+import it.luik.rijksmuseum.common.error.toErrorMessage
+import it.luik.rijksmuseum.common.loading.LoadingDelegate
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ArtCollectionViewModel @Inject constructor(
-    private val repo: ArtRepository
-) : ViewModel() {
+    private val repo: ArtRepository,
+    private val loadingDelegate: LoadingDelegate
+) : ViewModel(), LoadingDelegate by loadingDelegate {
 
     val onNavigateToItem: MutableSharedFlow<String> = MutableSharedFlow()
     val onErrorMessage: MutableSharedFlow<StringResource> = MutableSharedFlow()
 
     val collectionItems = MutableStateFlow<List<CollectionItem>>(emptyList())
     val totalItemsCount = MutableStateFlow(0)
-
-    val loadingState: MutableStateFlow<LoadingState> = MutableStateFlow(NONE)
 
     private var page: Int = 1
 
@@ -39,8 +36,8 @@ internal class ArtCollectionViewModel @Inject constructor(
 
     @VisibleForTesting
     internal fun loadArtCollection() {
-        startLoading()
         viewModelScope.launch {
+            startLoading(pageNumber = page)
             repo.getCollection(page)
                 .fold(
                     onSuccess = ::onCollection,
@@ -49,28 +46,20 @@ internal class ArtCollectionViewModel @Inject constructor(
         }
     }
 
-
     private fun onCollection(collectionPage: ArtCollectionPage) {
         totalItemsCount.value = collectionPage.totalCount
         val newPageItems = collectionPage.summaries.toOverviewItems()
         collectionItems.getAndUpdate { it + newPageItems }
-        stopLoading()
+
+        viewModelScope.launch { stopLoading() }
     }
 
     private fun onCollectionFailed(throwable: Throwable) {
-        viewModelScope.launch { stopLoading() }
-        Timber.e(throwable, "Failed to load art collection")
-
-        val errorMessageRes = when (throwable) {
-            is AuthException -> R.string.error_auth
-            is ClientException -> R.string.error_client
-            is ServerException -> R.string.error_server
-            else -> R.string.error_generic
-        }
-
         viewModelScope.launch {
-            onErrorMessage.emit(StringResource.Id(errorMessageRes))
+            onErrorMessage.emit(throwable.toErrorMessage())
         }
+
+        viewModelScope.launch { stopLoading() }
     }
 
     fun onCollectionItemClick(item: CollectionItem) {
@@ -83,22 +72,9 @@ internal class ArtCollectionViewModel @Inject constructor(
     }
 
     fun onLoadMore() {
-        if (loadingState.value == NONE) {
+        if (!isLoading()) {
             page++
             loadArtCollection()
         }
-    }
-
-    private fun startLoading() = viewModelScope.launch {
-        if (page > 1) loadingState.emit(LOADING_MORE)
-        else loadingState.emit(LOADING)
-    }
-
-    private fun stopLoading() = viewModelScope.launch {
-        loadingState.emit(NONE)
-    }
-
-    enum class LoadingState {
-        LOADING, LOADING_MORE, NONE
     }
 }

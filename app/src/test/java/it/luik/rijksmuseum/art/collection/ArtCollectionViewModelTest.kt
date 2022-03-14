@@ -1,19 +1,18 @@
 package it.luik.rijksmuseum.art.collection
 
-import androidx.annotation.StringRes
 import app.cash.turbine.test
 import io.github.glytching.junit.extension.random.Random
 import io.github.glytching.junit.extension.random.RandomBeansExtension
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
-import it.luik.rijksmuseum.R
 import it.luik.rijksmuseum.art.ArtRepository
-import it.luik.rijksmuseum.common.StringResource
-import it.luik.rijksmuseum.network.NetworkException.*
-import it.luik.rijksmuseum.art.collection.ArtCollectionViewModel.LoadingState.*
 import it.luik.rijksmuseum.art.collection.CollectionItem.ArtCollectionItem
 import it.luik.rijksmuseum.art.collection.CollectionItem.HeaderCollectionItem
+import it.luik.rijksmuseum.common.error.toErrorMessage
+import it.luik.rijksmuseum.common.loading.LoadingDelegate
+import it.luik.rijksmuseum.network.NetworkException.AuthException
 import it.luik.rijksmuseum.test.CoroutinesTestExtension
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -21,11 +20,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
-import java.io.IOException
-import java.util.stream.Stream
 
 @ExtendWith(
     RandomBeansExtension::class,
@@ -34,8 +28,12 @@ import java.util.stream.Stream
 internal class ArtCollectionViewModelTest {
 
     private val repo = mockk<ArtRepository>(relaxed = true)
+    private val delegate = mockk<LoadingDelegate>(relaxed = true)
 
-    private fun initViewModel() = ArtCollectionViewModel(repo = repo)
+    private fun initViewModel() = ArtCollectionViewModel(
+        repo = repo,
+        loadingDelegate = delegate
+    )
 
     @Test
     fun `when art item is clicked then navigate to details`(
@@ -90,17 +88,10 @@ internal class ArtCollectionViewModelTest {
         }
 
         @Test
-        fun `when initialized and art collection is loaded then loading indicator is shown`() =
-            runBlocking {
-                viewModel.loadingState.test {
-                    viewModel.loadArtCollection()
-
-                    assertEquals(NONE, awaitItem())
-                    assertEquals(LOADING, awaitItem())
-                    assertEquals(NONE, awaitItem())
-                    cancelAndIgnoreRemainingEvents()
-                }
-            }
+        fun `when initialized and art collection is loaded then loading is started and stopped`() {
+            coVerify { delegate.startLoading(1) }
+            coVerify { delegate.stopLoading() }
+        }
     }
 
     @Nested
@@ -189,8 +180,7 @@ internal class ArtCollectionViewModelTest {
         @Test
         fun `when second page is fetched then the result is added to the view items`(
             @Random pageOne: ArtCollectionPage,
-            @Random pageTwo: ArtCollectionPage,
-            @Random artSummary: ArtSummary
+            @Random pageTwo: ArtCollectionPage
         ) = runBlocking {
             coEvery { repo.getCollection(1) } returns Result.success(pageOne)
             coEvery { repo.getCollection(2) } returns Result.success(pageTwo)
@@ -211,45 +201,33 @@ internal class ArtCollectionViewModelTest {
         }
 
         @Test
-        fun `when load more is called then load more indicator is shown`() = runBlocking {
-            viewModel.loadingState.test {
-                viewModel.onLoadMore()
+        fun `when load more is called then load more indicator is shown`() {
+            viewModel.onLoadMore()
 
-                assertEquals(NONE, awaitItem())
-                assertEquals(LOADING_MORE, awaitItem())
-                assertEquals(NONE, awaitItem())
-                cancelAndIgnoreRemainingEvents()
-            }
+            coVerify { delegate.startLoading(2) }
+        }
+
+        @Test
+        fun `when loading is in progress and load more is called then nothing is done`() {
+            every { delegate.isLoading() } returns true
+
+            viewModel.onLoadMore()
+
+            coVerify(exactly = 0) { repo.getCollection(any()) }
         }
     }
 
-    @ParameterizedTest
-    @MethodSource("failureProvider")
-    fun `when loading collection fails then exception is shown`(
-        failure: Throwable, @StringRes errorMessage: Int
-    ) = runBlocking {
-        coEvery { repo.getCollection(any()) } returns Result.failure(AuthException())
+    @Test
+    fun `when loading collection fails then error is mapped to message`() = runBlocking {
+        val exception = AuthException()
+        coEvery { repo.getCollection(any()) } returns Result.failure(exception)
         val viewModel = initViewModel()
 
         viewModel.onErrorMessage.test {
             viewModel.onLoadMore()
 
-            assertEquals(StringResource.Id(R.string.error_auth), awaitItem())
+            assertEquals(exception.toErrorMessage(), awaitItem())
             cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    companion object {
-        @JvmStatic
-        fun failureProvider(): Stream<Arguments> {
-            return Stream.of(
-                Arguments.of(AuthException(), R.string.error_auth),
-                Arguments.of(ClientException(), R.string.error_client),
-                Arguments.of(ServerException(), R.string.error_server),
-                Arguments.of(IllegalStateException(), R.string.error_generic),
-                Arguments.of(IOException(), R.string.error_generic),
-                Arguments.of(Throwable(), R.string.error_generic),
-            )
         }
     }
 }
