@@ -5,8 +5,9 @@ import app.cash.turbine.test
 import io.github.glytching.junit.extension.random.Random
 import io.github.glytching.junit.extension.random.RandomBeansExtension
 import io.mockk.*
-import it.luik.rijksmuseum.art.data.ArtRepository
-import it.luik.rijksmuseum.art.data.details.ArtDetails
+import it.luik.rijksmuseum.art.domain.ArtRepository
+import it.luik.rijksmuseum.art.domain.details.ArtDetails
+import it.luik.rijksmuseum.loading.LoadingDelegate
 import it.luik.rijksmuseum.ui.art.error.toErrorMessage
 import it.luik.rijksmuseum.test.CoroutinesTestExtension
 import it.luik.rijksmuseum.ui.art.details.ArtDetailsViewModel
@@ -20,7 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 internal class ArtDetailsViewModelTest {
 
     private val repo = mockk<ArtRepository>(relaxed = true)
-    private val delegate = mockk<it.luik.rijksmuseum.loading.LoadingDelegate>(relaxed = true)
+    private val delegate = mockk<LoadingDelegate>(relaxed = true)
     private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
 
     private val defaultArg = "id1"

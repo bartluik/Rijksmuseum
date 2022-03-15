@@ -1,10 +1,10 @@
 package it.luik.rijksmuseum.ui.error
 
 import androidx.annotation.StringRes
-import it.luik.rijksmuseum.ui.art.text.StringResource
-import it.luik.rijksmuseum.art.data.R
 import it.luik.rijksmuseum.network.NetworkException
+import it.luik.rijksmuseum.ui.R
 import it.luik.rijksmuseum.ui.art.error.toErrorMessage
+import it.luik.rijksmuseum.ui.art.text.StringResource
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

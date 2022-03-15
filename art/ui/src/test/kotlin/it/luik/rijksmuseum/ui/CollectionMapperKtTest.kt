@@ -2,7 +2,7 @@ package it.luik.rijksmuseum.ui
 
 import io.github.glytching.junit.extension.random.Random
 import io.github.glytching.junit.extension.random.RandomBeansExtension
-import it.luik.rijksmuseum.art.data.collection.ArtSummary
+import it.luik.rijksmuseum.art.domain.collection.ArtSummary
 import it.luik.rijksmuseum.ui.art.collection.CollectionItem.HeaderCollectionItem
 import it.luik.rijksmuseum.ui.art.collection.toOverviewItems
 import org.junit.jupiter.api.Assertions

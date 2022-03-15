@@ -3,6 +3,7 @@ package it.luik.rijksmuseum.art.data.collection
 import io.github.glytching.junit.extension.random.Random
 import io.github.glytching.junit.extension.random.RandomBeansExtension
 import it.luik.rijksmuseum.art.data.ArtCollectionResponse
+import it.luik.rijksmuseum.art.domain.collection.ArtSummary
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

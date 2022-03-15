@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import it.luik.rijksmuseum.art.domain.ArtRepository
 import it.luik.rijksmuseum.art.domain.details.ArtDetails
+import it.luik.rijksmuseum.loading.LoadingDelegate
 import it.luik.rijksmuseum.ui.art.error.toErrorMessage
 import it.luik.rijksmuseum.ui.art.text.StringResource
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,8 +19,8 @@ import javax.inject.Inject
 internal class ArtDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val repo: ArtRepository,
-    private val loadingDelegate: it.luik.rijksmuseum.loading.LoadingDelegate
-) : ViewModel(), it.luik.rijksmuseum.loading.LoadingDelegate by loadingDelegate {
+    private val loadingDelegate: LoadingDelegate
+) : ViewModel(), LoadingDelegate by loadingDelegate {
 
     private val artId: String = requireNotNull(savedStateHandle.get<String>("artId"))
 
