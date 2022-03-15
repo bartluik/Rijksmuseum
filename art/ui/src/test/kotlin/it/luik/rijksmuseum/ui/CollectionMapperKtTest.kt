@@ -5,7 +5,7 @@ import io.github.glytching.junit.extension.random.RandomBeansExtension
 import it.luik.rijksmuseum.art.domain.collection.ArtSummary
 import it.luik.rijksmuseum.ui.art.collection.CollectionItem.HeaderCollectionItem
 import it.luik.rijksmuseum.ui.art.collection.toOverviewItems
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -19,8 +19,8 @@ internal class CollectionMapperKtTest {
         val mappedItems = listOf(artSummary).toOverviewItems()
 
         val headers = mappedItems.filterIsInstance<HeaderCollectionItem>()
-        Assertions.assertEquals(1, headers.size)
-        Assertions.assertEquals(HeaderCollectionItem(artSummary.author), headers.first())
+        assertEquals(1, headers.size)
+        assertEquals(HeaderCollectionItem(artSummary.author), headers.first())
     }
 
     @Test
@@ -34,8 +34,8 @@ internal class CollectionMapperKtTest {
         ).toOverviewItems()
 
         val headers = mappedItems.filterIsInstance<HeaderCollectionItem>()
-        Assertions.assertEquals(1, headers.size)
-        Assertions.assertEquals(HeaderCollectionItem(artSummary.author), headers.first())
+        assertEquals(1, headers.size)
+        assertEquals(HeaderCollectionItem(artSummary.author), headers.first())
     }
 
     @Test
@@ -49,8 +49,8 @@ internal class CollectionMapperKtTest {
         ).toOverviewItems()
 
         val headers = mappedItems.filterIsInstance<HeaderCollectionItem>()
-        Assertions.assertEquals(2, headers.size)
-        Assertions.assertEquals(HeaderCollectionItem("jaap"), headers.first())
-        Assertions.assertEquals(HeaderCollectionItem("klaas"), headers.last())
+        assertEquals(2, headers.size)
+        assertEquals(HeaderCollectionItem("jaap"), headers.first())
+        assertEquals(HeaderCollectionItem("klaas"), headers.last())
     }
 }
