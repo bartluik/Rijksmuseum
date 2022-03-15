@@ -1,0 +1,11 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id 'kotlin-kapt'
+}
+
+dependencies {
+    implementation(libs.coroutines)
+
+    testImplementation(testLibs.junit.core)
+    testImplementation(testLibs.junit.ext)
+}

@@ -1,0 +1,38 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation(project(":art:domain"))
+    implementation(project(":common:loading"))
+    implementation(project(":common:network"))
+
+    implementation(libs.material)
+    implementation(libs.coil)
+    implementation(libs.shimmer)
+    implementation(libs.timber)
+
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.compat)
+    implementation(libs.androidx.navigation)
+    implementation(libs.androidx.lifecycle)
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
+    testImplementation(testLibs.junit.core)
+    testImplementation(testLibs.junit.ext)
+    testImplementation(testLibs.mockk)
+    testImplementation(testLibs.turbine)
+    testImplementation(project(':common:test'))
+}

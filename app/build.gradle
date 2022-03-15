@@ -3,7 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-    id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
@@ -40,29 +39,14 @@ android {
 }
 
 dependencies {
-    implementation(project(':art'))
-    implementation(project(':network'))
+    implementation(project(':art:domain'))
+    implementation(project(':art:data'))
+    implementation(project(':art:ui'))
+    implementation(project(':common:network'))
 
-    implementation(libs.material)
-    implementation(libs.coil)
-    implementation(libs.shimmer)
     implementation(libs.timber)
-
-    implementation(libs.androidx.core)
-    implementation(libs.androidx.compat)
-    implementation(libs.androidx.navigation)
-    implementation(libs.androidx.lifecycle)
+    implementation(libs.coroutines)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-
-    testImplementation(testLibs.junit.core)
-    testImplementation(testLibs.junit.ext)
-    testImplementation(testLibs.mockk)
-    testImplementation(testLibs.turbine)
-    testImplementation(project(':common:test'))
-
-    androidTestImplementation(testLibs.androidx.ext)
-    androidTestImplementation(testLibs.androidx.navigation)
-    androidTestImplementation(testLibs.androidx.espresso)
 }
