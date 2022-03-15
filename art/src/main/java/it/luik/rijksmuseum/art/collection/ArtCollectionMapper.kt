@@ -1,9 +1,8 @@
 package it.luik.rijksmuseum.art.collection
 
-import it.luik.rijksmuseum.art.RijksmuseumArtRepository
 import it.luik.rijksmuseum.art.remote.ArtCollectionResponse
 
-internal fun Result<ArtCollectionResponse>.toArtCollectionPage() = map {
+internal fun Result<ArtCollectionResponse>.toArtCollectionPage(resultSize: Int) = map {
     ArtCollectionPage(
         summaries = it.artObjects.map { artObject ->
             ArtSummary(
@@ -14,7 +13,7 @@ internal fun Result<ArtCollectionResponse>.toArtCollectionPage() = map {
                 author = artObject.principalOrFirstMaker
             )
         },
-        resultSize = RijksmuseumArtRepository.DEFAULT_RESULT_SIZE,
+        resultSize = resultSize,
         totalCount = it.count
     )
 }

@@ -13,7 +13,7 @@ internal class RijksmuseumArtRepository @Inject constructor(
 
     override suspend fun getCollection(page: Int) = withContext(Dispatchers.IO) {
         client.getCollection(page, DEFAULT_RESULT_SIZE)
-            .toArtCollectionPage()
+            .toArtCollectionPage(DEFAULT_RESULT_SIZE)
     }
 
 
