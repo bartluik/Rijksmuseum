@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 internal interface RijksDataService {
 
-    @GET("/api/nl/collection?s=artist")
+    @GET("/api/nl/collection?s=artist&imgonly=True")
     suspend fun getCollection(
         @Query("p") page: Int,
         @Query("ps") resultSize: Int

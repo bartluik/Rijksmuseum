@@ -1,5 +1,6 @@
 package it.luik.rijksmuseum.art.details
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,7 +30,8 @@ internal class ArtDetailsViewModel @Inject constructor(
         loadArtDetails(artId)
     }
 
-    private fun loadArtDetails(artId: String) {
+    @VisibleForTesting
+    internal fun loadArtDetails(artId: String) {
         viewModelScope.launch {
             startLoading()
             repo.getDetails(artId)

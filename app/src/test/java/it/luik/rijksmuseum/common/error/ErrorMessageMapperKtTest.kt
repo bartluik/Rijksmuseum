@@ -22,6 +22,7 @@ internal class ErrorMessageMapperKtTest {
     }
 
     companion object {
+
         @JvmStatic
         fun failureProvider(): Stream<Arguments> {
             return Stream.of(

@@ -11,21 +11,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_overview_item">
 
-        <ProgressBar
-            android:id="@+id/details_loading_bar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.72"
-            tools:visibility="visible" />
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/art_illustration"
             android:layout_width="0dp"
@@ -68,6 +53,19 @@
             tools:text="De Nachtwacht blablabla blablabla blablabla blablabla blablabla blablabla
         blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla
         blablabla blablabla blablabla " />
+
+        <ProgressBar
+            android:id="@+id/details_loading_bar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

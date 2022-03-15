@@ -3,10 +3,7 @@ package it.luik.rijksmuseum.art.collection
 import app.cash.turbine.test
 import io.github.glytching.junit.extension.random.Random
 import io.github.glytching.junit.extension.random.RandomBeansExtension
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import it.luik.rijksmuseum.art.ArtRepository
 import it.luik.rijksmuseum.art.collection.CollectionItem.ArtCollectionItem
 import it.luik.rijksmuseum.art.collection.CollectionItem.HeaderCollectionItem
@@ -17,7 +14,6 @@ import it.luik.rijksmuseum.test.CoroutinesTestExtension
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -63,6 +59,22 @@ internal class ArtCollectionViewModelTest {
         }
     }
 
+    @Test
+    fun `when art collection is fetched then summaries are mapped`(
+        @Random artSummary: ArtSummary,
+        @Random page: ArtCollectionPage
+    ) {
+        coEvery { repo.getCollection(any()) } returns Result.success(
+            page.copy(summaries = listOf(artSummary))
+        )
+
+        val viewModel = initViewModel()
+
+        val headers = viewModel.collectionItems.value.filterIsInstance<HeaderCollectionItem>()
+        assertEquals(1, headers.size)
+        assertEquals(HeaderCollectionItem(artSummary.author), headers.first())
+    }
+
     @Nested
     inner class InitTest {
 
@@ -92,71 +104,6 @@ internal class ArtCollectionViewModelTest {
         fun `when initialized and art collection is loaded then loading is started and stopped`() {
             coVerify { delegate.startLoading(1) }
             coVerify { delegate.stopLoading() }
-        }
-    }
-
-    @Nested
-    inner class HeadersTest {
-
-        @Test
-        fun `when art collection is fetched then author header is added to view items`(
-            @Random artSummary: ArtSummary,
-            @Random page: ArtCollectionPage
-        ) {
-            coEvery { repo.getCollection(any()) } returns Result.success(
-                page.copy(summaries = listOf(artSummary))
-            )
-
-            val viewModel = initViewModel()
-
-            val headers = viewModel.collectionItems.value.filterIsInstance<HeaderCollectionItem>()
-            assertEquals(1, headers.size)
-            assertEquals(HeaderCollectionItem(artSummary.author), headers.first())
-        }
-
-        @Test
-        fun `when art collection is fetched and multiple items from same author then author header is added once`(
-            @Random artSummary: ArtSummary,
-            @Random secondArtSummary: ArtSummary,
-            @Random page: ArtCollectionPage
-        ) {
-            coEvery { repo.getCollection(any()) } returns Result.success(
-                page.copy(
-                    summaries = listOf(
-                        artSummary,
-                        secondArtSummary.copy(author = artSummary.author)
-                    )
-                )
-            )
-
-            val viewModel = initViewModel()
-
-            val headers = viewModel.collectionItems.value.filterIsInstance<HeaderCollectionItem>()
-            assertEquals(1, headers.size)
-            assertEquals(HeaderCollectionItem(artSummary.author), headers.first())
-        }
-
-        @Test
-        fun `when art collection is fetched and multiple items from different authors then multiple author headers are added`(
-            @Random artSummary: ArtSummary,
-            @Random secondArtSummary: ArtSummary,
-            @Random page: ArtCollectionPage
-        ) {
-            coEvery { repo.getCollection(any()) } returns Result.success(
-                page.copy(
-                    summaries = listOf(
-                        artSummary.copy(author = "jaap"),
-                        secondArtSummary.copy(author = "klaas")
-                    )
-                )
-            )
-
-            val viewModel = initViewModel()
-
-            val headers = viewModel.collectionItems.value.filterIsInstance<HeaderCollectionItem>()
-            assertEquals(2, headers.size)
-            assertEquals(HeaderCollectionItem("jaap"), headers.first())
-            assertEquals(HeaderCollectionItem("klaas"), headers.last())
         }
     }
 
@@ -209,8 +156,8 @@ internal class ArtCollectionViewModelTest {
         }
 
         @Test
-        @Disabled("This should actually work")
         fun `when loading is in progress and load more is called then nothing is done`() {
+            clearAllMocks()
             every { delegate.isLoading() } returns true
 
             viewModel.onLoadMore()
