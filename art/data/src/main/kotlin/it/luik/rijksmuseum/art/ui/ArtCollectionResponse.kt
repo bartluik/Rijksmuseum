@@ -1,4 +1,4 @@
-package it.luik.rijksmuseum.art.data
+package it.luik.rijksmuseum.art.ui
 
 import androidx.annotation.Keep
 
@@ -10,10 +10,8 @@ internal class ArtCollectionResponse(
 
 @Keep
 internal class ArtObjectResponse(
-    val id: String,
     val objectNumber: String,
     val title: String,
-    val longTitle: String,
     val principalOrFirstMaker: String,
     val webImage: WebImageResponse? = null
 )

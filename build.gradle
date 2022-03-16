@@ -35,3 +35,12 @@ subprojects {
         useJUnitPlatform()
     }
 }
+
+allprojects {
+    configurations.all {
+        resolutionStrategy {
+            //Mockk issue which depends on objenesis 3.1, which is android P+
+            force("org.objenesis:objenesis:2.6")
+        }
+    }
+}

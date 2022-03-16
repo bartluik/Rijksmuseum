@@ -1,4 +1,4 @@
-package it.luik.rijksmuseum.art.data
+package it.luik.rijksmuseum.art.ui
 
 import dagger.Binds
 import dagger.Module
@@ -12,16 +12,17 @@ import retrofit2.create
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class ArtModule {
+abstract class ArtModule {
 
     @Binds
-    abstract fun bindCollectionRepo(repo: RijksmuseumArtRepository): ArtRepository
+    @Reusable
+    internal abstract fun bindCollectionRepo(repo: RijksmuseumArtRepository): ArtRepository
 
     companion object {
 
         @Provides
         @Reusable
-        fun provideRijksmuseumService(retrofit: Retrofit): RijksDataService =
+        internal fun provideRijksmuseumService(retrofit: Retrofit): RijksDataService =
             retrofit.create()
     }
 }

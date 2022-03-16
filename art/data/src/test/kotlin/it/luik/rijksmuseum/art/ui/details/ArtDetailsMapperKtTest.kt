@@ -1,8 +1,8 @@
-package it.luik.rijksmuseum.art.data.details
+package it.luik.rijksmuseum.art.ui.details
 
 import io.github.glytching.junit.extension.random.Random
 import io.github.glytching.junit.extension.random.RandomBeansExtension
-import it.luik.rijksmuseum.art.data.ArtDetailsObjectResponse
+import it.luik.rijksmuseum.art.ui.ArtDetailsObjectResponse
 import it.luik.rijksmuseum.art.domain.details.ArtDetails
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

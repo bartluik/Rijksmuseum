@@ -16,7 +16,7 @@ android {
         versionCode appConfig.versionCode
         versionName appConfig.versionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "it.luik.rijksmuseum.HiltAndroidJUnitRunner"
     }
 
     buildTypes {
@@ -35,7 +35,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-
+    packagingOptions {
+        resources.excludes += "META-INF/LICENSE*"
+        resources.excludes += "META-INF/NOTICE.txt"
+    }
 }
 
 dependencies {
@@ -49,4 +52,14 @@ dependencies {
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    androidTestImplementation(libs.androidx.compat)
+    androidTestImplementation(libs.androidx.core)
+    androidTestImplementation(testLibs.androidx.espresso)
+    androidTestImplementation(testLibs.androidx.runner)
+    androidTestImplementation(testLibs.androidx.ktxExt)
+    androidTestImplementation(testLibs.barista)
+
+    androidTestImplementation(testLibs.hilt.android)
+    kaptAndroidTest(testLibs.hilt.compiler)
 }

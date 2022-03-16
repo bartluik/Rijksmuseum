@@ -1,4 +1,4 @@
-package it.luik.rijksmuseum.art.data
+package it.luik.rijksmuseum.art.ui
 
 import retrofit2.Response
 import retrofit2.http.GET

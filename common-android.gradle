@@ -23,6 +23,11 @@ subprojects {
                     jvmTarget = '1.8'
                 }
 
+                packagingOptions {
+                    resources.excludes += "META-INF/LICENSE*"
+                    resources.excludes += "META-INF/NOTICE.txt"
+                }
+
                 tasks.withType(Test) {
                     // Run JUnit 5 tests.
                     useJUnitPlatform()

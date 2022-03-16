@@ -9,3 +9,8 @@ dependencies {
     implementation(testLibs.mockk)
     implementation(testLibs.coroutines)
 }
+
+// Disable unit test tasks: this module only contains test code.
+tasks.withType(Test) {
+    enabled = false
+}

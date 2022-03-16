@@ -1,6 +1,6 @@
-package it.luik.rijksmuseum.art.data.details
+package it.luik.rijksmuseum.art.ui.details
 
-import it.luik.rijksmuseum.art.data.ArtDetailsObjectResponse
+import it.luik.rijksmuseum.art.ui.ArtDetailsObjectResponse
 import it.luik.rijksmuseum.art.domain.details.ArtDetails
 
 internal fun Result<ArtDetailsObjectResponse>.toArtDetails() = map {

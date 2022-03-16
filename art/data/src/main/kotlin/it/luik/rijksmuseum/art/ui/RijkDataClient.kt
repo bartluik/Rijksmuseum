@@ -1,4 +1,4 @@
-package it.luik.rijksmuseum.art.data
+package it.luik.rijksmuseum.art.ui
 
 import it.luik.rijksmuseum.network.mapResult
 import kotlinx.coroutines.delay

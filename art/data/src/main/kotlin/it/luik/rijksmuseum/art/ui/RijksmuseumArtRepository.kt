@@ -1,7 +1,7 @@
-package it.luik.rijksmuseum.art.data
+package it.luik.rijksmuseum.art.ui
 
-import it.luik.rijksmuseum.art.data.collection.toArtCollectionPage
-import it.luik.rijksmuseum.art.data.details.toArtDetails
+import it.luik.rijksmuseum.art.ui.collection.toArtCollectionPage
+import it.luik.rijksmuseum.art.ui.details.toArtDetails
 import it.luik.rijksmuseum.art.domain.ArtRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

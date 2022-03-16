@@ -1,8 +1,8 @@
-package it.luik.rijksmuseum.art.data.collection
+package it.luik.rijksmuseum.art.ui.collection
 
 import io.github.glytching.junit.extension.random.Random
 import io.github.glytching.junit.extension.random.RandomBeansExtension
-import it.luik.rijksmuseum.art.data.ArtCollectionResponse
+import it.luik.rijksmuseum.art.ui.ArtCollectionResponse
 import it.luik.rijksmuseum.art.domain.collection.ArtSummary
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -50,7 +50,6 @@ internal class ArtCollectionMapperKtTest {
                 ArtSummary(
                     id = it.objectNumber,
                     title = it.title,
-                    longTitle = it.longTitle,
                     imageUrl = it.webImage?.url,
                     author = it.principalOrFirstMaker
                 )
